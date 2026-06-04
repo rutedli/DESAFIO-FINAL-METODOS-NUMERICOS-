@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulación Numérica de Precios y Economía Familiar</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header>
+    <h1>DESAFÍO FINAL DE MÉTODOS NUMÉRICOS</h1>
+    <h2>Simulación del Precio del Arroz e Impacto Social</h2>
+</header>
+
+<nav class="sticky-nav">
+    <a href="#interpolacion">Interpolación</a>
+    <a href="#integracion">Integración</a>
+    <a href="#raices">Raíces</a>
+    <a href="#modulo5">Ecuaciones Diferenciales</a>
+    <a href="#marcoteorico" class="nav-academic">Marco Teórico</a>
+</nav>
+
+<main class="content-wrapper">
+
+    <section id="interpolacion">
+        <h2>Módulo 1: Interpolación (Escenario C)</h2>
+        <p>Estimación del precio del arroz en días sin muestreo mediante polinomios de Lagrange.</p>
+        <div class="form-group">
+            <label>Día a estimar (1-30):</label>
+            <input type="number" id="diaInterpolar" value="12">
+            <button onclick="interpolar()">Calcular Precio</button>
+        </div>
+        <h3>Resultado</h3>
+        <p id="resultadoInterpolacion" class="result-highlight">-</p>
+        <div class="chart-container">
+            <canvas id="graficoInterpolacion"></canvas>
+        </div>
+    </section>
+
+    <section id="integracion">
+        <h2>Módulo 2: Integración Numérica (Escenario D)</h2>
+        <p>Costo acumulado mensual familiar expuesto a tasas de inflación progresiva.</p>
+        <div class="form-group">
+            <button onclick="integrar()">Calcular Gasto Acumulado</button>
+        </div>
+        <h3>Resultado</h3>
+        <p id="resultadoIntegracion" class="result-highlight">-</p>
+        <div class="chart-container">
+            <canvas id="graficoIntegracion"></canvas>
+        </div>
+    </section>
+
+    <section id="raices">
+        <h2>Módulo 3: Raíces de Ecuaciones (Escenario E)</h2>
+        <p>Determinación del día crítico exacto donde el gasto intersecta el presupuesto límite.</p>
+        <div class="form-group">
+            <label>Presupuesto Máximo Familiar (Bs):</label>
+            <input type="number" id="presupuestoInput" value="650">
+            <button onclick="newton()">Encontrar Día Crítico</button>
+        </div>
+        <h3>Resultado</h3>
+        <p id="resultadoRaiz" class="result-highlight">-</p>
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Iteración ($k$)</th>
+                        <th>Aproximación de Raíz ($x_k$)</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaNewton"></tbody>
+            </table>
+        </div>
+        <div class="chart-container">
+            <canvas id="graficoRaiz"></canvas>
+        </div>
+    </section>
+
+    <section id="modulo5">
+        <h2>Módulo 5: Ecuaciones Diferenciales Ordinarias (Escenarios B y G)</h2>
+        <p>Modelado interactivo del vaciado de depósitos de combustible y evolución de la dinámica social de opinión.</p>
+        <div class="form-group">
+            <label>Tasa de Efectividad del Diálogo ($c$):</label>
+            <input type="number" id="parametroDialogo" value="0.05" step="0.01">
+            <button onclick="ejecutarEDO()">Simular Escenarios</button>
+        </div>
+        <div class="grid-charts">
+            <div class="card-chart">
+                <h3>Vaciado de Reservas de Combustible (Litros)</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="graficoReservas"></canvas>
+                </div>
+            </div>
+            <div class="card-chart">
+                <h3>Dinámica de Conflicto Colectivo (Población)</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="graficoSocial"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="marcoteorico" class="academic-section">
+        <h2>Procedimientos Matemáticos y Ecuaciones Fundamentales</h2>
+        <div class="theory-block">
+            <h3>Polinomio Interpolador de Lagrange</h3>
+            <div class="math-display">
+                $$P_n(x) = \sum_{i=0}^{n} y_i L_i(x) \quad \text{donde} \quad L_i(x) = \prod_{j=0, j \neq i}^{n} \frac{x - x_j}{x_i - x_j}$$
+            </div>
+        </div>
+        <div class="theory-block">
+            <h3>Cuadratura del Trapecio Compuesto</h3>
+            <div class="math-display">
+                $$\int_{a}^{b} f(x) \, dx \approx \frac{h}{2} \left[ f(a) + 2 \sum_{i=1}^{n-1} f(x_i) + f(b) \right]$$
+            </div>
+        </div>
+        <div class="theory-block">
+            <h3>Algoritmo de Runge-Kutta de Cuarto Orden (RK4)</h3>
+            <div class="math-display">
+                $$\mathbf{y}_{n+1} = \mathbf{y}_n + \frac{\Delta t}{6}(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4)$$
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>Proyecto de Métodos Numéricos 2026 - Simulación de Escenarios de Crisis</p>
+</footer>
+
+<script src="modulos-principales.js"></script>
+<script src="modulo5-edo.js"></script>
+</body>
+</html>
