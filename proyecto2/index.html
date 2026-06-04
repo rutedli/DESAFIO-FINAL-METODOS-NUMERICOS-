@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulación Numérica de Precios y Economía Familiar</title>
+    <title>Simulación Numérica Integrada - Desafío Final</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -11,126 +11,133 @@
 
 <header>
     <h1>DESAFÍO FINAL DE MÉTODOS NUMÉRICOS</h1>
-    <h2>Simulación del Precio del Arroz e Impacto Social</h2>
+    <h2>Simulación Multiescenario en Contexto de Crisis</h2>
 </header>
 
 <nav class="sticky-nav">
-    <a href="#interpolacion">Interpolación</a>
-    <a href="#integracion">Integración</a>
-    <a href="#raices">Raíces</a>
-    <a href="#modulo5">Ecuaciones Diferenciales</a>
-    <a href="#marcoteorico" class="nav-academic">Marco Teórico</a>
+    <a href="#modulo-sistemas">Sistemas (A y F)</a>
+    <a href="#modulo-raices">Raíces (E)</a>
+    <a href="#modulo-interpolacion">Interpolación (C)</a>
+    <a href="#modulo-integracion">Integración (D)</a>
+    <a href="#modulo-edo">Dinámicas (B y G)</a>
 </nav>
 
-<main class="content-wrapper">
+<main class="main-container">
 
-    <section id="interpolacion">
-        <h2>Módulo 1: Interpolación (Escenario C)</h2>
-        <p>Estimación del precio del arroz en días sin muestreo mediante polinomios de Lagrange.</p>
-        <div class="form-group">
-            <label>Día a estimar (1-30):</label>
-            <input type="number" id="diaInterpolar" value="12">
-            <button onclick="interpolar()">Calcular Precio</button>
+    <section id="modulo-sistemas">
+        <h2>Módulo 1: Red de Transporte y Análisis de Rumores (Escenarios A y F)</h2>
+        <div class="input-grid">
+            <div class="input-box">
+                <label>Demanda Norte:</label>
+                <input type="number" id="demandaNorte" value="300">
+            </div>
+            <div class="input-box">
+                <label>Demanda Centro:</label>
+                <input type="number" id="demandaCentro" value="450">
+            </div>
+            <div class="input-box">
+                <label>Demanda Sur:</label>
+                <input type="number" id="demandaSur" value="250">
+            </div>
         </div>
-        <h3>Resultado</h3>
-        <p id="resultadoInterpolacion" class="result-highlight">-</p>
-        <div class="chart-container">
-            <canvas id="graficoInterpolacion"></canvas>
+        <button onclick="calcularSistemas()">Optimizar y Analizar Sensibilidad</button>
+
+        <div class="output-box">
+            <h3>Resultados Gauss-Seidel (Escenario A):</h3>
+            <p id="txtSistemaA">Esperando ejecución...</p>
+            <h3>Evaluación de Mal Condicionamiento por Rumor (+5% Demanda) (Escenario F):</h3>
+            <p id="txtSistemaF">Esperando análisis...</p>
+        </div>
+        <div class="canvas-holder">
+            <canvas id="chartSistemas"></canvas>
         </div>
     </section>
 
-    <section id="integracion">
-        <h2>Módulo 2: Integración Numérica (Escenario D)</h2>
-        <p>Costo acumulado mensual familiar expuesto a tasas de inflación progresiva.</p>
-        <div class="form-group">
-            <button onclick="integrar()">Calcular Gasto Acumulado</button>
-        </div>
-        <h3>Resultado</h3>
-        <p id="resultadoIntegracion" class="result-highlight">-</p>
-        <div class="chart-container">
-            <canvas id="graficoIntegracion"></canvas>
-        </div>
-    </section>
-
-    <section id="raices">
-        <h2>Módulo 3: Raíces de Ecuaciones (Escenario E)</h2>
-        <p>Determinación del día crítico exacto donde el gasto intersecta el presupuesto límite.</p>
-        <div class="form-group">
+    <section id="modulo-raices">
+        <h2>Módulo 2: Umbrales Críticos de Gasto Familiar (Escenario E)</h2>
+        <div class="input-box">
             <label>Presupuesto Máximo Familiar (Bs):</label>
             <input type="number" id="presupuestoInput" value="650">
-            <button onclick="newton()">Encontrar Día Crítico</button>
+            <button onclick="ejecutarNewton()">Encontrar Día Crítico</button>
         </div>
-        <h3>Resultado</h3>
-        <p id="resultadoRaiz" class="result-highlight">-</p>
-        <div class="table-responsive">
-            <table class="data-table">
+        <div class="output-box">
+            <p id="txtRaiz" class="highlight-text">Introduzca un presupuesto para iterar.</p>
+        </div>
+        <div class="table-container">
+            <table>
                 <thead>
                     <tr>
-                        <th>Iteración ($k$)</th>
-                        <th>Aproximación de Raíz ($x_k$)</th>
+                        <th>Iteración (k)</th>
+                        <th>Aproximación Día (x_k)</th>
+                        <th>f(x_k) Residuo</th>
                     </tr>
                 </thead>
-                <tbody id="tablaNewton"></tbody>
+                <tbody id="tablaNewtonBody">
+                    <tr><td colspan="3">Sin datos calculados</td></tr>
+                </tbody>
             </table>
         </div>
-        <div class="chart-container">
-            <canvas id="graficoRaiz"></canvas>
+    </section>
+
+    <section id="modulo-interpolacion">
+        <h2>Módulo 3: Reconstrucción Continua de Precios (Escenario C)</h2>
+        <div class="input-box">
+            <label>Día específico a interpolar (1-30):</label>
+            <input type="number" id="diaInterpolar" value="12">
+            <button onclick="ejecutarInterpolacion()">Calcular Lagrange</button>
+        </div>
+        <div class="output-box">
+            <p id="txtInterpolacion">Defina el día de consulta.</p>
+        </div>
+        <div class="canvas-holder">
+            <canvas id="chartInterpolacion"></canvas>
         </div>
     </section>
 
-    <section id="modulo5">
-        <h2>Módulo 5: Ecuaciones Diferenciales Ordinarias (Escenarios B y G)</h2>
-        <p>Modelado interactivo del vaciado de depósitos de combustible y evolución de la dinámica social de opinión.</p>
-        <div class="form-group">
-            <label>Tasa de Efectividad del Diálogo ($c$):</label>
-            <input type="number" id="parametroDialogo" value="0.05" step="0.01">
-            <button onclick="ejecutarEDO()">Simular Escenarios</button>
+    <section id="modulo-integracion">
+        <h2>Módulo 4: Costo Acumulado y Pérdida de Poder Adquisitivo (Escenario D)</h2>
+        <button onclick="ejecutarIntegracion()">Calcular Cuadratura Mensual</button>
+        <div class="output-box">
+            <p id="txtIntegracion">Presione para calcular la integral por Trapecio Compuesto.</p>
         </div>
-        <div class="grid-charts">
-            <div class="card-chart">
-                <h3>Vaciado de Reservas de Combustible (Litros)</h3>
-                <div class="canvas-wrapper">
-                    <canvas id="graficoReservas"></canvas>
+    </section>
+
+    <section id="modulo-edo">
+        <h2>Módulo 5: Simulación Dinámica de Almacenamiento y Conflictos (Escenarios B y G)</h2>
+        <div class="input-box">
+            <label>Efectividad del Diálogo (Parámetro c):</label>
+            <input type="number" id="parametroC" value="0.05" step="0.01">
+            <button onclick="ejecutarEDO()">Resolver Dinámicas por RK4</button>
+        </div>
+        <div class="split-grid">
+            <div class="chart-card">
+                <h3>Vaciado de Tanques (Escenario B)</h3>
+                <div class="canvas-holder">
+                    <canvas id="chartReservas"></canvas>
                 </div>
             </div>
-            <div class="card-chart">
-                <h3>Dinámica de Conflicto Colectivo (Población)</h3>
-                <div class="canvas-wrapper">
-                    <canvas id="graficoSocial"></canvas>
+            <div class="chart-card">
+                <h3>Evolución de Opinión Pública (Escenario G)</h3>
+                <div class="canvas-holder">
+                    <canvas id="chartSocial"></canvas>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="marcoteorico" class="academic-section">
-        <h2>Procedimientos Matemáticos y Ecuaciones Fundamentales</h2>
-        <div class="theory-block">
-            <h3>Polinomio Interpolador de Lagrange</h3>
-            <div class="math-display">
-                $$P_n(x) = \sum_{i=0}^{n} y_i L_i(x) \quad \text{donde} \quad L_i(x) = \prod_{j=0, j \neq i}^{n} \frac{x - x_j}{x_i - x_j}$$
-            </div>
-        </div>
-        <div class="theory-block">
-            <h3>Cuadratura del Trapecio Compuesto</h3>
-            <div class="math-display">
-                $$\int_{a}^{b} f(x) \, dx \approx \frac{h}{2} \left[ f(a) + 2 \sum_{i=1}^{n-1} f(x_i) + f(b) \right]$$
-            </div>
-        </div>
-        <div class="theory-block">
-            <h3>Algoritmo de Runge-Kutta de Cuarto Orden (RK4)</h3>
-            <div class="math-display">
-                $$\mathbf{y}_{n+1} = \mathbf{y}_n + \frac{\Delta t}{6}(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4)$$
-            </div>
-        </div>
+    <section class="conclusiones-sec">
+        <h2>Conclusiones y Limitaciones Académicas</h2>
+        <p>
+            <strong>Análisis del Sistema:</strong> Las aproximaciones obtenidas evidencian cómo las variaciones exógenas afectan los modelos. En el Módulo 1 (Escenario F), un ligero incremento del 5% provocado por rumores altera las cargas lógicas de abastecimiento, evidenciando la sensibilidad matemática del diseño operativo ante fenómenos de pánico colectivo. El método de Runge-Kutta de 4to orden (RK4) provee una estabilidad robusta frente a métodos lineales unidireccionales al mitigar el error de truncamiento global en las tasas de descontento social e inventarios de combustible.
+        </p>
     </section>
 
 </main>
 
 <footer>
-    <p>Proyecto de Métodos Numéricos 2026 - Simulación de Escenarios de Crisis</p>
+    <p>© 2026 - Proyecto de Métodos Numéricos Aplicados</p>
 </footer>
 
-<script src="modulos-principales.js"></script>
-<script src="modulo5-edo.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
